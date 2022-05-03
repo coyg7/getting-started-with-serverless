@@ -6,7 +6,7 @@
 
 ## Getting started
 ```
-sls create --name YOUR_PROJECT_NAME --template-url https://github.com/coyg7/geting-started-with-serverless
+sls create --name YOUR_PROJECT_NAME --template-url https://github.com/coyg7/getting-started-with-serverless
 cd YOUR_PROJECT_NAME
 npm install
 ```
