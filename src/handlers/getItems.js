@@ -6,16 +6,16 @@ import commonMiddleware from '../lib/commonMiddleware';
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-async function getAuctions(event, context) {
-  let auctions;
+async function getItems(event, context) {
+  let items;
 
   try{
     const result = await dynamodb.scan({
-        TableName: process.env.AUCTIONS_TABLE_NAME
+        TableName: process.env.ITEMS_TABLE_NAME
     }).promise();
     
 
-    auctions = result.Items;
+    items = result.Items;
     
     
   } catch (error) {
@@ -26,8 +26,8 @@ async function getAuctions(event, context) {
 
   return {
     statusCode: 200,
-    body: JSON.stringify(auctions),
+    body: JSON.stringify(items),
   };
 }
 
-export const handler = commonMiddleware(getAuctions);
+export const handler = commonMiddleware(getItems);

@@ -1,4 +1,4 @@
-service: auction-service
+service: item-service
 
 plugins:
   - serverless-bundle
@@ -11,51 +11,39 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: us-west-2
   environment:
-    AUCTIONS_TABLE_NAME: ${self:custom.AuctionsTable.name}
+    ITEMS_TABLE_NAME: ${self:custom.ItemsTable.name}
   iamRoleStatements:
-    - ${file(iam/AuctionsTableIAM.yml):AuctionsTableIAM} 
+    - ${file(iam/ItemsTableIAM.yml):ItemsTableIAM} 
 
 resources:
   Resources:
-    AuctionsTable: ${file(resources/AuctionsTable.yml):AuctionsTable}
+    ItemsTable: ${file(resources/Item.yml):ItemsTable}
 
 functions:
-  createAuction:
-    handler: src/handlers/createAuction.handler
+  createItem:
+    handler: src/handlers/createItem.handler
     events:
       - http:
           method: POST
-          path: /auction
+          path: /item
 
-  getAuctions:
-    handler: src/handlers/getAuctions.handler
+  getItems:
+    handler: src/handlers/getItems.handler
     events:
       - http:
           method: GET
-          path: /auctions
+          path: /items
 
-  getAuction:
-    handler: src/handlers/getAuction.handler
+  getTodo:
+    handler: src/handlers/getItem.handler
     events:
       - http:
           method: GET
-          path: /auction/{id}
-
-  placeBid:
-    handler: src/handlers/placeBid.handler
-    events:
-      - http:
-          method: PATCH
-          path: /auction/{id}/bid
-
-  processAuctions:
-    handler: src/handlers/processAuctions.handler
-    events:
-      - schedule: rate(1 minute)
+          path: /item/{id}
 
 custom:
-  AuctionsTable:
-    name: !Ref AuctionsTable
-    arn: !GetAtt AuctionsTable.Arn
+  ItemsTable:
+    name: !Ref ItemsTable
+    arn: !GetAtt ItemsTable.Arn
   bundle:
     linting: false

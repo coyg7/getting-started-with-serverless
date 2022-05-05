@@ -6,27 +6,24 @@ import commonMiddleware from '../lib/commonMiddleware';
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-async function createAuction(event, context) {
+async function createItem(event, context) {
 
   const { title } = event.body;   
 
   const now = new Date();
 
-  const auction = {
+  const item = {
     id: uuid(),
     title,
-    status: 'OPEN',
-    createdAt: now.toISOString(),
-    highestBid: {
-      amount: 0
-    }
+    status: 'TODO',
+    createdAt: now.toISOString()
    };
 
 
   try{
     await dynamodb.put({
-      TableName: process.env.AUCTIONS_TABLE_NAME,
-         Item: auction
+      TableName: process.env.ITEMS_TABLE_NAME,
+         Item: item
        }).promise();
   } catch (error) {
     console.error(error);
@@ -36,10 +33,10 @@ async function createAuction(event, context) {
 
   return {
     statusCode: 201,
-    body: JSON.stringify(auction),
+    body: JSON.stringify(tofo),
   };
 }
 
-export const handler = commonMiddleware(createAuction);
+export const handler = commonMiddleware(createItem);
 
 
