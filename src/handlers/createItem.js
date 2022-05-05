@@ -33,7 +33,7 @@ async function createItem(event, context) {
 
   return {
     statusCode: 201,
-    body: JSON.stringify(tofo),
+    body: JSON.stringify(item),
   };
 }
 
