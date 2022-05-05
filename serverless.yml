@@ -17,7 +17,7 @@ provider:
 
 resources:
   Resources:
-    ItemsTable: ${file(resources/Item.yml):ItemsTable}
+    ItemsTable: ${file(resources/ItemsTable.yml):ItemsTable}
 
 functions:
   createItem:
